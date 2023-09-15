@@ -17,12 +17,41 @@ const clear = () => {
 // Create a ship object
 let ship = new Ship(canvas.width / 2, canvas.height / 2, 35);
 
-console.log(ship);
 const update = () => {
   clear();
+  ship.updatePosition();
   ship.draw(ctx);
 };
 
-window.onload = function () {
-  setInterval(update, 10);
+let isAccelerating = false;
+const gameLoop = () => {
+  if (isAccelerating) {
+    // Increase the ship's speed when accelerating
+    ship.speed += 0.1; // You can adjust this value as needed
+  } else {
+    // Decelerate the ship (optional)
+    ship.speed *= 0.99; // You can adjust this value as needed
+  }
+
+  update();
+  requestAnimationFrame(gameLoop);
 };
+
+gameLoop();
+
+// Setup key event listeners
+document.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowLeft") {
+    ship.angle += ship.rotationSpeed;
+  } else if (event.key == "ArrowRight") {
+    ship.angle -= ship.rotationSpeed;
+  } else if (event.key === "ArrowUp") {
+    isAccelerating = true;
+  }
+});
+
+document.addEventListener("keyup", (event) => {
+  if (event.key === "ArrowUp") {
+    isAccelerating = false;
+  }
+});
