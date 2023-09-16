@@ -17,26 +17,22 @@ const clear = () => {
 // Create a ship object
 let ship = new Ship(canvas.width / 2, canvas.height / 2, 35);
 
+// Method to update the game for each tick inside gameloop
 const update = () => {
   clear();
+  ship.accelearate(isAccelerating);
   ship.updatePosition();
   ship.draw(ctx);
 };
 
 let isAccelerating = false;
-const gameLoop = () => {
-  if (isAccelerating) {
-    // Increase the ship's speed when accelerating
-    ship.speed += 0.1; // You can adjust this value as needed
-  } else {
-    // Decelerate the ship (optional)
-    ship.speed *= 0.99; // You can adjust this value as needed
-  }
 
+const gameLoop = () => {
   update();
   requestAnimationFrame(gameLoop);
 };
 
+// Start game
 gameLoop();
 
 // Setup key event listeners

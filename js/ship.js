@@ -41,6 +41,16 @@ class Ship {
     this.x += vx;
     this.y -= vy; // Subtract vy because the y-axis is inverted in canvas
   }
+
+  accelearate(isAccelerating) {
+    if (isAccelerating) {
+      // Increase the ship's speed when accelerating
+      this.speed += 0.1; // You can adjust this value as needed
+    } else {
+      // Decelerate the ship (optional)
+      this.speed *= 0.99; // You can adjust this value as needed
+    }
+  }
 }
 
 export default Ship;
