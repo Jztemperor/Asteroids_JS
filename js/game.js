@@ -20,12 +20,15 @@ let ship = new Ship(canvas.width / 2, canvas.height / 2, 35);
 // Method to update the game for each tick inside gameloop
 const update = () => {
   clear();
+  ship.rotate(isRotatingLeft, isRotatingRight);
   ship.accelearate(isAccelerating);
   ship.updatePosition();
   ship.backToCanvas();
   ship.draw(ctx);
 };
 
+let isRotatingLeft = false;
+let isRotatingRight = false;
 let isAccelerating = false;
 
 const gameLoop = () => {
@@ -39,16 +42,20 @@ gameLoop();
 // Setup key event listeners
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") {
-    ship.angle -= ship.rotationSpeed;
-  } else if (event.key == "ArrowRight") {
-    ship.angle += ship.rotationSpeed;
+    isRotatingLeft = true;
+  } else if (event.key === "ArrowRight") {
+    isRotatingRight = true;
   } else if (event.key === "ArrowUp") {
     isAccelerating = true;
   }
 });
 
 document.addEventListener("keyup", (event) => {
-  if (event.key === "ArrowUp") {
+  if (event.key === "ArrowLeft") {
+    isRotatingLeft = false;
+  } else if (event.key === "ArrowRight") {
+    isRotatingRight = false;
+  } else if (event.key === "ArrowUp") {
     isAccelerating = false;
   }
 });
