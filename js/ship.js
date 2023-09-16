@@ -43,7 +43,7 @@ class Ship {
     this.y -= vy; // Subtract vy because the y-axis is inverted in canvas
   }
 
-  // Handle rotations based on user input
+  // Handle rotations based on user
   rotate(isRotatingLeft, isRotatingRight) {
     if (isRotatingLeft) {
       this.angle -= this.rotationSpeed;

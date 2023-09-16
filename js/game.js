@@ -27,8 +27,7 @@ let asteroidFactory = new AsteroidFactory();
 // Asteroid creation
 let asteroids = asteroidFactory.createAsteroids(10, canvas);
 
-console.log(asteroids);
-
+let gameOver = false;
 // Method to update the game for each tick inside gameloop
 const update = () => {
   clear();
@@ -36,6 +35,7 @@ const update = () => {
   ship.accelearate(isAccelerating);
   ship.updatePosition();
   ship.backToCanvas();
+  //ship.didCollide(asteroids);
   ship.draw(ctx);
 
   asteroids.forEach((asteroid) => {
@@ -44,12 +44,59 @@ const update = () => {
 
     asteroid.backToCanvas();
 
+    const asteroidImageData = ctx.getImageData(
+      asteroid.x,
+      asteroid.y,
+      asteroid.size,
+      asteroid.size
+    );
+
+    // Loop through the pixel data to check for white pixels
+    for (let i = 0; i < asteroidImageData.data.length; i += 4) {
+      // Extract the RGB values
+      const red = asteroidImageData.data[i];
+      const green = asteroidImageData.data[i + 1];
+      const blue = asteroidImageData.data[i + 2];
+
+      // Check if the pixel is white (255, 255, 255)
+      if (red === 255 && green === 255 && blue === 255) {
+        // Calculate the pixel's position relative to the asteroid
+        const pixelX = (i / 4) % asteroid.size;
+        const pixelY = Math.floor(i / 4 / asteroid.size);
+
+        // Calculate the pixel's absolute position on the canvas
+        const absoluteX = asteroid.x + pixelX;
+        const absoluteY = asteroid.y + pixelY;
+
+        // Calculate the distance between the ship's center and the pixel
+        const dx = ship.x - absoluteX;
+        const dy = ship.y - absoluteY;
+        const distance = Math.sqrt(dx * dx + dy * dy) - ship.size / 2;
+
+        // Set a collision threshold (adjust this value as needed)
+        const collisionThreshold = ship.size;
+
+        // Check for collision based on distance
+        if (
+          absoluteX >= ship.x &&
+          absoluteX <= ship.x + ship.size &&
+          absoluteY >= ship.y &&
+          absoluteY <= ship.y + ship.size &&
+          distance < collisionThreshold &&
+          asteroidImageData.data[i + 3] != 0
+        ) {
+          gameOver = true;
+          break;
+        }
+      }
+    }
+
     ctx.drawImage(
       asteroid.image,
       asteroid.x,
       asteroid.y,
-      asteroid.size * 2,
-      asteroid.size * 2
+      asteroid.size,
+      asteroid.size
     );
   });
 };
@@ -59,11 +106,17 @@ let isRotatingRight = false;
 let isAccelerating = false;
 
 const gameLoop = () => {
-  update();
-  requestAnimationFrame(gameLoop);
+  if (!gameOver) {
+    update();
+    requestAnimationFrame(gameLoop);
+  } else {
+    // Game over logic, e.g., displaying a game over message
+    ctx.fillStyle = "white";
+    ctx.font = "36px Arial";
+    ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
+  }
 };
 
-// Start game
 gameLoop();
 
 // Setup key event listeners
