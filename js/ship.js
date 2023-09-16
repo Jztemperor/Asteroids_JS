@@ -43,6 +43,7 @@ class Ship {
     this.y -= vy; // Subtract vy because the y-axis is inverted in canvas
   }
 
+  // Speed up the ship if the user is accelerating and the max speed is not reached
   accelearate(isAccelerating) {
     if (isAccelerating && this.speed < this.maxSpeed) {
       // Increase the ship's speed when accelerating
@@ -50,6 +51,27 @@ class Ship {
     } else {
       // Decelerate the ship
       this.speed *= 0.99;
+    }
+  }
+
+  // Put ship back to canvas on the opposite side if it leaves
+  backToCanvas() {
+    // Check if ship left on X axis (left side - put back to canvas width, right side - put to 0)
+    // canvas width == right side
+    // canvas width = 0 == left side
+    if (this.x < 0) {
+      this.x = canvas.width;
+    } else if (this.x > canvas.width) {
+      this.x = 0;
+    }
+
+    // Check if ship left on Y axis
+    // Canvas height == top side
+    // Canvas height = 0 == bottom
+    if (this.y < 0) {
+      this.y = canvas.height;
+    } else if (this.y > canvas.height) {
+      this.y = 0;
     }
   }
 }

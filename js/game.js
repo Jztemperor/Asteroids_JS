@@ -22,6 +22,7 @@ const update = () => {
   clear();
   ship.accelearate(isAccelerating);
   ship.updatePosition();
+  ship.backToCanvas();
   ship.draw(ctx);
 };
 
