@@ -1,4 +1,7 @@
 import Ship from "./ship.js";
+import Asteroid from "./asteroid.js";
+import AsteroidFactory from "./asteroidFactory.js";
+
 // Get canvas, context
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -17,6 +20,15 @@ const clear = () => {
 // Create a ship object
 let ship = new Ship(canvas.width / 2, canvas.height / 2, 35);
 
+// asteroid logic
+
+// helper class for asteroid creation, image loading
+let asteroidFactory = new AsteroidFactory();
+// Asteroid creation
+let asteroids = asteroidFactory.createAsteroids(10, canvas);
+
+console.log(asteroids);
+
 // Method to update the game for each tick inside gameloop
 const update = () => {
   clear();
@@ -25,6 +37,21 @@ const update = () => {
   ship.updatePosition();
   ship.backToCanvas();
   ship.draw(ctx);
+
+  asteroids.forEach((asteroid) => {
+    asteroid.x += asteroid.speedX;
+    asteroid.y += asteroid.speedY;
+
+    asteroid.backToCanvas();
+
+    ctx.drawImage(
+      asteroid.image,
+      asteroid.x,
+      asteroid.y,
+      asteroid.size * 2,
+      asteroid.size * 2
+    );
+  });
 };
 
 let isRotatingLeft = false;
