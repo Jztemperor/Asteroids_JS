@@ -5,6 +5,7 @@ class Ship {
     this.size = size;
     this.rotationSpeed = 7;
     this.speed = 0;
+    this.maxSpeed = 8;
     this.angle = 0;
   }
 
@@ -43,12 +44,12 @@ class Ship {
   }
 
   accelearate(isAccelerating) {
-    if (isAccelerating) {
+    if (isAccelerating && this.speed < this.maxSpeed) {
       // Increase the ship's speed when accelerating
-      this.speed += 0.1; // You can adjust this value as needed
+      this.speed += 0.1;
     } else {
-      // Decelerate the ship (optional)
-      this.speed *= 0.99; // You can adjust this value as needed
+      // Decelerate the ship
+      this.speed *= 0.99;
     }
   }
 }
