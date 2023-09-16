@@ -38,9 +38,9 @@ gameLoop();
 // Setup key event listeners
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") {
-    ship.angle += ship.rotationSpeed;
-  } else if (event.key == "ArrowRight") {
     ship.angle -= ship.rotationSpeed;
+  } else if (event.key == "ArrowRight") {
+    ship.angle += ship.rotationSpeed;
   } else if (event.key === "ArrowUp") {
     isAccelerating = true;
   }
