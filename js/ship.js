@@ -1,3 +1,5 @@
+import Projectile from "./projectile.js";
+
 class Ship {
   constructor(x, y, size) {
     this.x = x;
@@ -7,6 +9,10 @@ class Ship {
     this.speed = 0;
     this.maxSpeed = 10;
     this.angle = 0;
+    this.projectiles = [];
+    this.lastShot = 0;
+    this.cooldown = 200;
+    this.isShooting = false;
   }
 
   draw(ctx) {
@@ -126,6 +132,40 @@ class Ship {
         ) {
           return true;
         }
+      }
+    }
+  }
+
+  shoot() {
+    const currentTime = Date.now();
+    // Prevent spamming of bullets, prevent holding down space to shoot
+    if (!this.isShooting && currentTime - this.lastShot >= this.cooldown) {
+      const projectile = new Projectile(this.x, this.y, this.angle);
+      this.projectiles.push(projectile);
+      this.lastShot = currentTime;
+      this.isShooting = true;
+    }
+  }
+
+  drawProjectiles(ctx) {
+    this.projectiles.forEach((projectile) => {
+      projectile.draw(ctx);
+    });
+  }
+
+  updateProjectiles() {
+    for (let i = this.projectiles.length - 1; i >= 0; i--) {
+      const projectile = this.projectiles[i];
+      projectile.updatePosition();
+
+      // Remove projectiles that are out of bounds
+      if (
+        projectile.x < 0 ||
+        projectile.x > canvas.width ||
+        projectile.y < 0 ||
+        projectile.y > canvas.height
+      ) {
+        this.projectiles.splice(i, 1);
       }
     }
   }

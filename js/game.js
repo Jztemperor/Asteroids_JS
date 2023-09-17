@@ -34,8 +34,9 @@ const update = () => {
   ship.accelearate(isAccelerating);
   ship.updatePosition();
   ship.backToCanvas();
-  //ship.didCollide(asteroids);
   ship.draw(ctx);
+  ship.updateProjectiles();
+  ship.drawProjectiles(ctx);
 
   asteroids.forEach((asteroid) => {
     asteroid.x += asteroid.speedX;
@@ -65,6 +66,7 @@ const update = () => {
   });
 };
 
+// Game vars
 let isRotatingLeft = false;
 let isRotatingRight = false;
 let isAccelerating = false;
@@ -92,6 +94,9 @@ document.addEventListener("keydown", (event) => {
     isRotatingRight = true;
   } else if (event.key === "ArrowUp") {
     isAccelerating = true;
+  } else if (event.key === " ") {
+    ship.shoot();
+    ship.isShooting = true;
   }
 });
 
@@ -102,5 +107,7 @@ document.addEventListener("keyup", (event) => {
     isRotatingRight = false;
   } else if (event.key === "ArrowUp") {
     isAccelerating = false;
+  } else if (event.key === " ") {
+    ship.isShooting = false;
   }
 });
