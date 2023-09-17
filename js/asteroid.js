@@ -12,14 +12,17 @@ class Asteroid {
       this.size = 70;
       this.speedX = this.getRandomNumber(-1, 3);
       this.speedY = this.getRandomNumber(-2, 4);
+      this.health = 3;
     } else if (type === "mediumAsteroid1" || type === "mediumAsteroid3") {
       this.size = 45;
       this.speedX = this.getRandomNumber(-3, 4);
       this.speedY = this.getRandomNumber(-4, 5);
+      this.health = 2;
     } else {
       this.size = 35;
       this.speedX = this.getRandomNumber(-5, 5);
       this.speedY = this.getRandomNumber(-6, 7);
+      this.health = 1;
     }
   }
 
@@ -39,6 +42,13 @@ class Asteroid {
     } else if (this.y > canvas.height) {
       this.y = 0;
     }
+  }
+
+  collideWithProjectile(projectile) {
+    const dx = this.x + this.size / 2 - projectile.x;
+    const dy = this.y + this.size / 2 - projectile.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    return distance < this.size / 2;
   }
 }
 

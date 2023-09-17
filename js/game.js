@@ -56,6 +56,24 @@ const update = () => {
       gameOver = true;
     }
 
+    // Check if asteroids is shot
+    for (let j = ship.projectiles.length - 1; j >= 0; j--) {
+      const projectile = ship.projectiles[j];
+
+      // Check for collision
+      if (asteroid.collideWithProjectile(projectile)) {
+        // Handle the collision, e.g., decrease asteroid health
+        asteroid.health -= 1;
+        if (asteroid.health <= 0) {
+          // Remove the asteroid if health is zero or less
+          asteroids = arrRemove(asteroids, asteroid);
+        }
+
+        // Remove the bullet
+        ship.projectiles.splice(j, 1);
+      }
+    }
+
     ctx.drawImage(
       asteroid.image,
       asteroid.x,
@@ -111,3 +129,9 @@ document.addEventListener("keyup", (event) => {
     ship.isShooting = false;
   }
 });
+
+const arrRemove = (arr, val) => {
+  return arr.filter((check) => {
+    return check != val;
+  });
+};
