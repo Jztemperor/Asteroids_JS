@@ -22,7 +22,7 @@ class Ship {
     ctx.lineTo(this.size / 2, this.size);
     ctx.closePath();
 
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 6;
     ctx.strokeStyle = "#FFFFFF";
     ctx.fillStyle = "#000000";
     ctx.stroke();
@@ -81,6 +81,52 @@ class Ship {
       this.y = canvas.height;
     } else if (this.y > canvas.height) {
       this.y = 0;
+    }
+  }
+
+  // Collision detection
+  // - Check for white pixels in asteroid img data (border...)
+  // Calculate distance from pixel to ship (kinda)
+  // if distance < treshold -> collision
+  didCollide(asteroidImageData, asteroid) {
+    // Loop through the pixel data to check for white pixels
+    for (let i = 0; i < asteroidImageData.data.length; i += 4) {
+      // Extract the RGB values
+      const red = asteroidImageData.data[i];
+      const green = asteroidImageData.data[i + 1];
+      const blue = asteroidImageData.data[i + 2];
+
+      // Check if the pixel is white (255, 255, 255)
+      if (red === 255 && green === 255 && blue === 255) {
+        // Calculate the pixel's position relative to the asteroid
+        const pixelX = (i / 4) % asteroid.size;
+        const pixelY = Math.floor(i / 4 / asteroid.size);
+
+        // Calculate the pixel's absolute position on the canvas
+        const absoluteX = asteroid.x + pixelX;
+        const absoluteY = asteroid.y + pixelY;
+
+        // Calculate the distance between the ship's center and the pixel
+        const dx = this.x - absoluteX;
+        const dy = this.y - absoluteY;
+        const distance = Math.sqrt(dx * dx + dy * dy) - this.size / 2;
+
+        // Set a collision threshold
+        const collisionThreshold = this.size;
+
+        if (asteroidImageData.data[i + 3] == 0) return;
+        // Check for collision based on distance
+        if (
+          absoluteX >= this.x &&
+          absoluteX <= this.x + this.size &&
+          absoluteY >= this.y &&
+          absoluteY <= this.y + this.size &&
+          distance < collisionThreshold &&
+          asteroidImageData.data[i + 3] != 0
+        ) {
+          return true;
+        }
+      }
     }
   }
 }

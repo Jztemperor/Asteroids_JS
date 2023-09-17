@@ -17,7 +17,7 @@ class Asteroid {
       this.speedX = this.getRandomNumber(-3, 4);
       this.speedY = this.getRandomNumber(-4, 5);
     } else {
-      this.size = 30;
+      this.size = 35;
       this.speedX = this.getRandomNumber(-5, 5);
       this.speedY = this.getRandomNumber(-6, 7);
     }

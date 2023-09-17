@@ -4,7 +4,7 @@ import AsteroidFactory from "./asteroidFactory.js";
 
 // Get canvas, context
 const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
 // Set canvas to fill the screen
 canvas.height = window.innerHeight;
@@ -27,7 +27,6 @@ let asteroidFactory = new AsteroidFactory();
 // Asteroid creation
 let asteroids = asteroidFactory.createAsteroids(10, canvas);
 
-let gameOver = false;
 // Method to update the game for each tick inside gameloop
 const update = () => {
   clear();
@@ -51,44 +50,9 @@ const update = () => {
       asteroid.size
     );
 
-    // Loop through the pixel data to check for white pixels
-    for (let i = 0; i < asteroidImageData.data.length; i += 4) {
-      // Extract the RGB values
-      const red = asteroidImageData.data[i];
-      const green = asteroidImageData.data[i + 1];
-      const blue = asteroidImageData.data[i + 2];
-
-      // Check if the pixel is white (255, 255, 255)
-      if (red === 255 && green === 255 && blue === 255) {
-        // Calculate the pixel's position relative to the asteroid
-        const pixelX = (i / 4) % asteroid.size;
-        const pixelY = Math.floor(i / 4 / asteroid.size);
-
-        // Calculate the pixel's absolute position on the canvas
-        const absoluteX = asteroid.x + pixelX;
-        const absoluteY = asteroid.y + pixelY;
-
-        // Calculate the distance between the ship's center and the pixel
-        const dx = ship.x - absoluteX;
-        const dy = ship.y - absoluteY;
-        const distance = Math.sqrt(dx * dx + dy * dy) - ship.size / 2;
-
-        // Set a collision threshold (adjust this value as needed)
-        const collisionThreshold = ship.size;
-
-        // Check for collision based on distance
-        if (
-          absoluteX >= ship.x &&
-          absoluteX <= ship.x + ship.size &&
-          absoluteY >= ship.y &&
-          absoluteY <= ship.y + ship.size &&
-          distance < collisionThreshold &&
-          asteroidImageData.data[i + 3] != 0
-        ) {
-          gameOver = true;
-          break;
-        }
-      }
+    // Handle collision
+    if (ship.didCollide(asteroidImageData, asteroid)) {
+      gameOver = true;
     }
 
     ctx.drawImage(
@@ -104,6 +68,7 @@ const update = () => {
 let isRotatingLeft = false;
 let isRotatingRight = false;
 let isAccelerating = false;
+let gameOver = false;
 
 const gameLoop = () => {
   if (!gameOver) {
