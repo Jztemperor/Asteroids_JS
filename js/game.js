@@ -67,6 +67,9 @@ const update = () => {
         if (asteroid.health <= 0) {
           // Remove the asteroid if health is zero or less
           asteroids = arrRemove(asteroids, asteroid);
+
+          // Update player score
+          updateScore(asteroid.type);
         }
 
         // Remove the bullet
@@ -82,6 +85,11 @@ const update = () => {
       asteroid.size
     );
   });
+
+  ctx.fillStyle = "#FFFFFF";
+  ctx.textAlign = "center";
+  ctx.font = '30px "Press Start 2P", sans-serif';
+  ctx.fillText("SCORE: " + score, canvas.width / 2, 50);
 };
 
 // Game vars
@@ -89,6 +97,7 @@ let isRotatingLeft = false;
 let isRotatingRight = false;
 let isAccelerating = false;
 let gameOver = false;
+let score = 0;
 
 const gameLoop = () => {
   if (!gameOver) {
@@ -104,7 +113,7 @@ const gameLoop = () => {
 
 gameLoop();
 
-// Setup key event listeners
+// Setup keydown event listeners
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") {
     isRotatingLeft = true;
@@ -118,6 +127,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+// Setup keyup event listeners
 document.addEventListener("keyup", (event) => {
   if (event.key === "ArrowLeft") {
     isRotatingLeft = false;
@@ -130,8 +140,27 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
+// Remove given element (object) from an array
 const arrRemove = (arr, val) => {
   return arr.filter((check) => {
     return check != val;
   });
+};
+
+// Update player's score based on asteroid type
+const updateScore = (asteroidType) => {
+  if (
+    asteroidType === "largeAsteroid1" ||
+    asteroidType === "largeAsteroid2" ||
+    asteroidType === "largeAsteroid3"
+  ) {
+    score += 5;
+  } else if (
+    asteroidType === "mediumAsteroid1" ||
+    asteroidType === "mediumAsteroid3"
+  ) {
+    score += 3;
+  } else {
+    score += 1;
+  }
 };
