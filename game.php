@@ -1,3 +1,12 @@
+<?php
+  session_start();
+  if(!isset($_SESSION['username']))
+  {
+    header("Location: auth.html");
+    exit();
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -9,12 +18,12 @@
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/css/game.css" />
+    <link rel="stylesheet" href="./css/game.css" />
     <title>Asteroids</title>
   </head>
   <body>
     <canvas id="canvas"></canvas>
 
-    <script src="/js/game.js" type="module"></script>
+    <script src="./js/game.js" type="module"></script>
   </body>
 </html>

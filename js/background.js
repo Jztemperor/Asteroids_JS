@@ -13,14 +13,14 @@ backgroundCanvas.height = window.innerHeight;
 
 // Define asteroid images
 const asteroidImages = {
-  largeAsteroid1: "/assets/larg_asteroid_1.png",
-  largeAsteroid2: "/assets/larg_asteroid_2.png",
-  largeAsteroid3: "/assets/larg_asteroid_3.png",
-  mediumAsteroid1: "/assets/medium_asteroid_1.png",
-  mediumAsteroid3: "/assets/medium_asteroid_3.png",
-  smallAsteroid1: "/assets/small_asteroid_1.png",
-  smallAsteroid2: "/assets/small_asteroid_2.png",
-  smallAsteroid3: "/assets/small_asteroid_3.png",
+  largeAsteroid1: "../assets/larg_asteroid_1.png",
+  largeAsteroid2: "./assets/larg_asteroid_2.png",
+  largeAsteroid3: "./assets/larg_asteroid_3.png",
+  mediumAsteroid1: "./assets/medium_asteroid_1.png",
+  mediumAsteroid3: "./assets/medium_asteroid_3.png",
+  smallAsteroid1: "./assets/small_asteroid_1.png",
+  smallAsteroid2: "./assets/small_asteroid_2.png",
+  smallAsteroid3: "./assets/small_asteroid_3.png",
 };
 
 // Array to store asteroid objects
