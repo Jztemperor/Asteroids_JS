@@ -1,5 +1,4 @@
 import Ship from "./ship.js";
-import Asteroid from "./asteroid.js";
 import AsteroidFactory from "./asteroidFactory.js";
 
 // Get canvas, context
@@ -26,6 +25,13 @@ let ship = new Ship(canvas.width / 2, canvas.height / 2, 35);
 let asteroidFactory = new AsteroidFactory();
 // Asteroid creation
 let asteroids = asteroidFactory.createAsteroids(10, canvas, ship);
+
+const displayScore = () => {
+  ctx.fillStyle = "#FFFFFF";
+  ctx.textAlign = "center";
+  ctx.font = '30px "Press Start 2P", sans-serif';
+  ctx.fillText("SCORE: " + score, canvas.width / 2, 50);
+};
 
 // Method to update the game for each tick inside gameloop
 const update = () => {
@@ -91,10 +97,7 @@ const update = () => {
     console.log(asteroids.length);
   });
 
-  ctx.fillStyle = "#FFFFFF";
-  ctx.textAlign = "center";
-  ctx.font = '30px "Press Start 2P", sans-serif';
-  ctx.fillText("SCORE: " + score, canvas.width / 2, 50);
+  displayScore();
 };
 
 // Game vars
@@ -110,9 +113,17 @@ const gameLoop = () => {
     requestAnimationFrame(gameLoop);
   } else {
     // Game over logic, e.g., displaying a game over message
-    ctx.fillStyle = "white";
-    ctx.font = "36px Arial";
-    ctx.fillText("Game Over", canvas.width / 2 - 100, canvas.height / 2);
+    clear();
+    displayScore();
+
+    ctx.fillStyle = "#FFFFFF";
+    ctx.textAlign = "center";
+    ctx.font = '20px "Press Start 2P", sans-serif';
+    ctx.fillText(
+      "GAME OVER, press 'R' to restart or 'S' to view scoreboard!",
+      canvas.width / 2,
+      canvas.height / 2
+    );
   }
 };
 
@@ -129,6 +140,8 @@ document.addEventListener("keydown", (event) => {
   } else if (event.key === " ") {
     ship.shoot();
     ship.isShooting = true;
+  } else if (event.key === "r" && gameOver == true) {
+    restartGame();
   }
 });
 
@@ -168,4 +181,23 @@ const updateScore = (asteroidType) => {
   } else {
     score += 1;
   }
+};
+
+const restartGame = () => {
+  clear();
+
+  // Reset ship
+  ship = new Ship(canvas.width / 2, canvas.height / 2, 35);
+
+  // Reset asteroids
+  asteroids = asteroidFactory.createAsteroids(10, canvas, ship);
+
+  // Reset game vars
+  isRotatingLeft = false;
+  isRotatingRight = false;
+  isAccelerating = false;
+  gameOver = false;
+  score = 0;
+
+  gameLoop();
 };
