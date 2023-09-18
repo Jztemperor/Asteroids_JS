@@ -25,7 +25,7 @@ let ship = new Ship(canvas.width / 2, canvas.height / 2, 35);
 // helper class for asteroid creation, image loading
 let asteroidFactory = new AsteroidFactory();
 // Asteroid creation
-let asteroids = asteroidFactory.createAsteroids(10, canvas);
+let asteroids = asteroidFactory.createAsteroids(10, canvas, ship);
 
 // Method to update the game for each tick inside gameloop
 const update = () => {
@@ -72,7 +72,7 @@ const update = () => {
           updateScore(asteroid.type);
 
           // respawn asteroid (so we wont run out of them)
-          asteroids.push(asteroidFactory.createAsteroid(canvas));
+          asteroids.push(asteroidFactory.createAsteroid(canvas, ship));
         }
 
         // Remove the bullet

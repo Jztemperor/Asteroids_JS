@@ -36,10 +36,21 @@ class AsteroidFactory {
   }
 
   // Create one asteroid
-  createAsteroid(canvas) {
+  createAsteroid(canvas, ship) {
+    const minDistanceFromShip = 10;
+    let asteroidX, asteroidY;
+
+    do {
+      asteroidX = Math.random() * canvas.width;
+      asteroidY = Math.random() * canvas.height;
+    } while (
+      Math.sqrt((asteroidX - ship.x) ** 2 + (asteroidY - ship.y) ** 2) <
+      minDistanceFromShip
+    );
+
     const asteroid = new Asteroid(
-      Math.random() * canvas.width, // Random spawn x
-      Math.random() * canvas.height, // Random spawn y
+      asteroidX, // Random spawn x
+      asteroidY, // Random spawn y
       this.asteroidTypes[Math.floor(Math.random() * this.asteroidTypes.length)],
       this.asteroidImageObjects
     );
@@ -48,13 +59,25 @@ class AsteroidFactory {
   }
 
   // Create multiple asteroids
-  createAsteroids(amount, canvas) {
+  createAsteroids(amount, canvas, ship) {
     const asteroids = [];
+    const minDistanceFromShip = 10;
 
     for (let i = 0; i < amount; i++) {
+      let asteroidX, asteroidY;
+
+      // Generate a random position for the asteroid while ensuring it's not too close to the ship
+      do {
+        asteroidX = Math.random() * canvas.width;
+        asteroidY = Math.random() * canvas.height;
+      } while (
+        Math.sqrt((asteroidX - ship.x) ** 2 + (asteroidY - ship.y) ** 2) <
+        minDistanceFromShip
+      );
+
       const asteroid = new Asteroid(
-        Math.random() * canvas.width, // Random spawn x
-        Math.random() * canvas.height, // Random spawn y
+        asteroidX,
+        asteroidY,
         this.asteroidTypes[
           Math.floor(Math.random() * this.asteroidTypes.length)
         ],
@@ -67,5 +90,4 @@ class AsteroidFactory {
     return asteroids;
   }
 }
-
 export default AsteroidFactory;
