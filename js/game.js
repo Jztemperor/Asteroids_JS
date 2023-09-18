@@ -70,6 +70,9 @@ const update = () => {
 
           // Update player score
           updateScore(asteroid.type);
+
+          // respawn asteroid (so we wont run out of them)
+          asteroids.push(asteroidFactory.createAsteroid(canvas));
         }
 
         // Remove the bullet
@@ -84,6 +87,8 @@ const update = () => {
       asteroid.size,
       asteroid.size
     );
+
+    console.log(asteroids.length);
   });
 
   ctx.fillStyle = "#FFFFFF";

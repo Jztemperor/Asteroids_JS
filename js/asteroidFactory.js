@@ -35,6 +35,19 @@ class AsteroidFactory {
     }
   }
 
+  // Create one asteroid
+  createAsteroid(canvas) {
+    const asteroid = new Asteroid(
+      Math.random() * canvas.width, // Random spawn x
+      Math.random() * canvas.height, // Random spawn y
+      this.asteroidTypes[Math.floor(Math.random() * this.asteroidTypes.length)],
+      this.asteroidImageObjects
+    );
+
+    return asteroid;
+  }
+
+  // Create multiple asteroids
   createAsteroids(amount, canvas) {
     const asteroids = [];
 
