@@ -1,6 +1,14 @@
 <?php
+/*
+ * register.php
+ * Handles user registration
+ * Validates form data via xml requests, sends back json response with validation messages
+ * 
+ */
+
 session_start();
 
+// Check for post request
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
     // Import db conn
@@ -61,6 +69,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         }
     }
 }
+
+// Set content type and return the response json
 header('Content-Type: application/json');
 echo json_encode($response);
 ?>
