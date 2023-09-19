@@ -40,7 +40,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
             // If user exists return error json
             if($user)
             {
-                $response = array("success" => false, "fieldName" => "email", "message" => "Email or username already in use!");  
+                $response = array("success" => false, "fieldName" => "email", "message" => "Email or username in use!");  
             }
             else
             {
@@ -56,8 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 $_SESSION["username"] = $username;
                 
                 // Redirect user to the menu
-                header("Location: index.html");
-                exit();
+                $response = array("success" => true);  
             }
         }
     }

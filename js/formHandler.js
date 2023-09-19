@@ -12,16 +12,28 @@ document
 
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
+        // Get response
         let response = JSON.parse(this.responseText);
 
-        // Get field from response (which caused the error)
-        let field = response.fieldName;
-
         // Print response (validation messages, errors in request)
-        if (response.success) {
-          alert(response.message);
+        if (!response.success) {
+          // Get fields from server response, set error labels accordingly
+          let field = response.fieldName;
+
+          if (field == "email") {
+            emailLabel.textContent = response.message;
+          }
+
+          if (field == "username") {
+            usernameLabel.textContent = response.message;
+          }
+
+          if (field == "password") {
+            passwordLabel.textContent = response.message;
+          }
         } else {
-          alert(response.message);
+          // If registartion was a success, redirect to menu
+          window.location.href = "http://localhost/asteroids/index.html";
         }
       }
     };
