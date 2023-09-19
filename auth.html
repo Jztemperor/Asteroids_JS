@@ -21,7 +21,7 @@
         <form
           action="register.php"
           method="post"
-          class="register"
+          class="authForm"
           id="register"
         >
           <div class="inputgroup">
@@ -67,25 +67,27 @@
 
       <div class="form-container">
         <h2>Sign in</h2>
-        <form action="" class="register login">
+        <form action="" class="authForm">
           <input
             type="text"
             class="input"
-            name="username"
+            name="login_username"
+            id="login_username"
             placeholder="Username"
             required
           />
           <input
             type="password"
             class="input"
-            name="password"
+            name="login_password"
+            id="login_password"
             placeholder="Password"
             required
           />
           <input
             type="submit"
             class="submit-btn"
-            id="register-button"
+            id="login-button"
             value="Login"
           />
         </form>

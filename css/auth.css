@@ -41,7 +41,7 @@ h2 {
   align-items: center;
 }
 
-.register {
+.authForm {
   margin-top: 20px;
   display: flex;
   flex-direction: column;
