@@ -3,12 +3,18 @@ document
   .getElementById("register")
   .addEventListener("submit", function (event) {
     event.preventDefault();
+
     let xhttp = new XMLHttpRequest();
 
     // Get label selectors
     let usernameLabel = document.getElementById("register_username_label");
     let emailLabel = document.getElementById("register_email_label");
     let passwordLabel = document.getElementById("register_password_label");
+
+    // Clear labels
+    usernameLabel.textContent = "";
+    emailLabel.textContent = "";
+    passwordLabel.textContent = "";
 
     xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
@@ -17,20 +23,22 @@ document
 
         // Print response (validation messages, errors in request)
         if (!response.success) {
-          // Get fields from server response, set error labels accordingly
-          let field = response.fieldName;
+          // Read each error from response and assign them to the labels
+          response.errors.forEach((error) => {
+            let field = error.fieldName;
 
-          if (field == "email") {
-            emailLabel.textContent = response.message;
-          }
+            if (field == "email") {
+              emailLabel.textContent = error.message;
+            }
 
-          if (field == "username") {
-            usernameLabel.textContent = response.message;
-          }
+            if (field == "username") {
+              usernameLabel.textContent = error.message;
+            }
 
-          if (field == "password") {
-            passwordLabel.textContent = response.message;
-          }
+            if (field == "password") {
+              passwordLabel.textContent = error.message;
+            }
+          });
         } else {
           // If registartion was a success, redirect to menu
           window.location.href = "http://localhost/asteroids/index.html";

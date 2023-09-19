@@ -15,23 +15,31 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     require_once("db.php");
 
     // Get user input from POST request
-    $username = $_POST["register_username"];
-    $email = filter_var($_POST["register_email"], FILTER_VALIDATE_EMAIL);
-    $password = $_POST["register_password"];
+    $username = trim($_POST["register_username"]);
+    $email = trim(filter_var($_POST["register_email"], FILTER_VALIDATE_EMAIL));
+    $password = trim($_POST["register_password"]);
+
+    // Empty array to store errors
+    $errors = array();
 
     // Validate
     if(!$email)
     {
-        $response = array("success" => false, "fieldName" => "email", "message" => "Invalid Email format!");
-    }else if(empty($username))
-    {
-        $response = array("success" => false, "fieldName" => "username", "message" => "Username is required!");
-    }else if(empty($password))
-    {
-        $response = array("success" => false, "fieldName" => "password", "message" => "Password is required!");
+        $errors[] = array("fieldName" => "email", "message" => "Valid email required!");
     }
-    else
+    
+    if(empty($username))
     {
+        $errors[] = array("fieldName" => "username", "message" => "Username is required!");
+    }
+    
+    if(empty($password))
+    {
+        $errors[] = array("fieldName" => "password", "message" => "Password is required!");
+    }
+
+
+ 
         // Check if user already exists (email or username)
         $stmt = $conn->prepare("SELECT * FROM user WHERE email = ? OR username = ?");
         
@@ -48,9 +56,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
             // If user exists return error json
             if($user)
             {
-                $response = array("success" => false, "fieldName" => "email", "message" => "Email or username in use!");  
+                $errors[] = array("fieldName" => "email", "message" => "Email or username in use!");                 
             }
-            else
+            else if(empty($errors))
             {
                 // Hash password, and save user to database
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -62,15 +70,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
                 // Set session
                 $_SESSION["username"] = $username;
+
+                $successResponse = array("success" => true);
+                header('Content-Type: application/json');
+                echo json_encode($successResponse);
                 
-                // Redirect user to the menu
-                $response = array("success" => true);  
             }
         }
+
+    // If there are erros, put them in an array and send to client
+    if(!empty($errors))
+    {
+        $errorResponse = array("success" => false, "errors" => $errors);
+        header('Content-Type: application/json');
+        echo json_encode($errorResponse);
     }
+    
 }
 
-// Set content type and return the response json
-header('Content-Type: application/json');
-echo json_encode($response);
+
 ?>
