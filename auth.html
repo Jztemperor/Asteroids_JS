@@ -64,23 +64,29 @@
 
       <div class="form-container">
         <h2>Sign in</h2>
-        <form action="" class="authForm">
-          <input
-            type="text"
-            class="input"
-            name="login_username"
-            id="login_username"
-            placeholder="Username"
-            required
-          />
-          <input
-            type="password"
-            class="input"
-            name="login_password"
-            id="login_password"
-            placeholder="Password"
-            required
-          />
+        <form action="login.php" method="post" id="login" class="authForm">
+          <div class="inputgroup">
+            <input
+              type="text"
+              class="input"
+              name="login_username"
+              id="login_username"
+              placeholder="Username"
+            />
+            <label for="login_username" id="login_username_label"></label>
+          </div>
+
+          <div class="inputgroup">
+            <input
+              type="password"
+              class="input"
+              name="login_password"
+              id="login_password"
+              placeholder="Password"
+            />
+            <label for="login_password" id="login_password_label"></label>
+          </div>
+
           <input
             type="submit"
             class="submit-btn"
