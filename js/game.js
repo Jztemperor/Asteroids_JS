@@ -112,6 +112,7 @@ const gameLoop = () => {
   } else {
     // Game over logic, e.g., displaying a game over message
     clear();
+    saveScore();
     displayScore();
 
     ctx.fillStyle = "#FFFFFF";
@@ -198,4 +199,18 @@ const restartGame = () => {
   score = 0;
 
   gameLoop();
+};
+
+// send post request to save game score
+const saveScore = () => {
+  let xhttp = new XMLHttpRequest();
+
+  xhttp.open("POST", "score.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+  // Add the game score to the request parameters
+  let params = "score=" + score;
+
+  // Send the game score request
+  xhttp.send(params);
 };
