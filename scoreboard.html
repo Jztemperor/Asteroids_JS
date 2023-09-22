@@ -9,20 +9,20 @@
       href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css" />
-    <title>Asteroids</title>
+    <link rel="stylesheet" href="./css/scoreboard.css" />
+    <title>Asteroids - Scoreboard</title>
   </head>
   <body>
-    <canvas id="backgroundCanvas"></canvas>
-    <div id="menu">
-      <div class="menu-item" id="startButton">
-        <a href="./game.php" class="link">START GAME</a>
-      </div>
-      <div class="menu-item" id="scoreBoardButton">
-        <a href="./scoreboard.html" class="link">SCOREBOARD</a>
-      </div>
-    </div>
+    <h1 class="main_title">Asteroids</h1>
+    <h2 class="sub_title">hall of fame</h2>
+    <table id="scoreboard">
+      <tr>
+        <th>Rank</th>
+        <th>Player Name</th>
+        <th>Score</th>
+      </tr>
+    </table>
 
-    <script src="./js/background.js"></script>
+    <script src="./js/scoreBoard.js"></script>
   </body>
 </html>

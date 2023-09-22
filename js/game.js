@@ -141,6 +141,8 @@ document.addEventListener("keydown", (event) => {
     ship.isShooting = true;
   } else if (event.key === "r" && gameOver == true) {
     restartGame();
+  } else if (event.key === "s" && gameOver == true) {
+    window.location.href = "../../asteroids/scoreboard.html";
   }
 });
 
