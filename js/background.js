@@ -96,7 +96,6 @@ for (let i = 0; i < 20; i++) {
     "smallAsteroid3",
   ];
   const type = asteroidTypes[Math.floor(Math.random() * asteroidTypes.length)];
-  console.log(type);
 
   asteroids.push({ x, y, radius, speedX, speedY, type });
 }

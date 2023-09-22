@@ -41,7 +41,7 @@ document
           });
         } else {
           // If registartion was a success, redirect to menu
-          window.location.href = "http://localhost/asteroids/index.html";
+          window.location.href = "../../asteroids/index.html";
         }
       }
     };
@@ -99,7 +99,7 @@ document.getElementById("login").addEventListener("submit", function (event) {
         });
       } else {
         // If registartion was a success, redirect to menu
-        window.location.href = "http://localhost/asteroids/index.html";
+        window.location.href = "../../asteroids/index.html";
       }
     }
   };
