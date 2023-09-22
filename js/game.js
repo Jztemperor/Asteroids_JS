@@ -68,7 +68,7 @@ const update = () => {
 
       // Check for collision
       if (asteroid.collideWithProjectile(projectile)) {
-        // Handle the collision, e.g., decrease asteroid health
+        // Handle the collision
         asteroid.health -= 1;
         if (asteroid.health <= 0) {
           // Remove the asteroid if health is zero or less
@@ -93,8 +93,6 @@ const update = () => {
       asteroid.size,
       asteroid.size
     );
-
-    console.log(asteroids.length);
   });
 
   displayScore();

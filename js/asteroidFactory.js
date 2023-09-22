@@ -37,7 +37,7 @@ class AsteroidFactory {
 
   // Create one asteroid
   createAsteroid(canvas, ship) {
-    const minDistanceFromShip = 10;
+    const minDistanceFromShip = 250;
     let asteroidX, asteroidY;
 
     do {
@@ -61,7 +61,7 @@ class AsteroidFactory {
   // Create multiple asteroids
   createAsteroids(amount, canvas, ship) {
     const asteroids = [];
-    const minDistanceFromShip = 10;
+    const minDistanceFromShip = 250;
 
     for (let i = 0; i < amount; i++) {
       let asteroidX, asteroidY;
