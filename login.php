@@ -45,7 +45,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         // If user exists and password checks out set session and success response
         if($user && password_verify($password, $user["password"]))
         {
-            $_SESSION["username"] = $username;
+            $_SESSION["user_id"] = $user["user_id"];
             $successResponse = array("success" => true);
             header('Content-Type: application/json');
             echo json_encode($successResponse);
@@ -64,5 +64,3 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         echo json_encode($errorResponse);
     }
 }
-
-?>

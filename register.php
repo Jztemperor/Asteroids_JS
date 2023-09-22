@@ -66,10 +66,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                 $stmt = $conn->prepare("INSERT INTO user (username,email,password) VALUES (?,?,?)");
                 $stmt->bind_param("sss", $username, $email, $hashedPassword);
                 $stmt->execute();
+
+                // Get lastest inserted id
+                $user_id = $conn->insert_id;
+
                 $stmt->close();
 
+
                 // Set session
-                $_SESSION["username"] = $username;
+                $_SESSION["user_id"] = $user_id;
 
                 $successResponse = array("success" => true);
                 header('Content-Type: application/json');
@@ -87,6 +92,3 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     }
     
 }
-
-
-?>
