@@ -92,3 +92,24 @@ input:focus {
   border-color: firebrick;
   font-size: 15px;
 }
+
+.back_to_menu_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-bottom: 2px solid white;
+  border-right: 2px solid white;
+  padding: 15px 20px;
+  z-index: 9999;
+  background: black;
+}
+
+.back_to_menu_btn {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.back_to_menu_btn:hover {
+  color: firebrick;
+}
