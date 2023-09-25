@@ -33,8 +33,13 @@ const displayScore = () => {
   ctx.fillText("SCORE: " + score, canvas.width / 2, 50);
 };
 
+let lastSpeedUpdateTime = Date.now();
+let speedUpdateInterval = 180000;
 // Method to update the game for each tick inside gameloop
 const update = () => {
+  let currentTime = Date.now();
+  let timeElapsed = currentTime - lastSpeedUpdateTime;
+
   clear();
   ship.rotate(isRotatingLeft, isRotatingRight);
   ship.accelearate(isAccelerating);
@@ -84,6 +89,13 @@ const update = () => {
         // Remove the bullet
         ship.projectiles.splice(j, 1);
       }
+    }
+
+    if (timeElapsed >= speedUpdateInterval) {
+      asteroid.speedX += asteroid.getRandomNumber(1, 3);
+      asteroid.speedY += asteroid.getRandomNumber(2, 4);
+
+      lastSpeedUpdateTime = currentTime;
     }
 
     ctx.drawImage(

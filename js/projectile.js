@@ -4,6 +4,7 @@ class Projectile {
     this.y = y;
     this.speed = 12;
     this.angle = angle;
+    this.wallTraveled = false;
   }
 
   updatePosition() {
@@ -21,6 +22,24 @@ class Projectile {
   draw(ctx) {
     ctx.fillStyle = "#FFFFFF";
     ctx.fillRect(this.x, this.y, 7, 7);
+  }
+
+  backToCanvas() {
+    if (this.x < 0) {
+      this.x = canvas.width;
+      this.wallTraveled = true;
+    } else if (this.x > canvas.width) {
+      this.x = 0;
+      this.wallTraveled = true;
+    }
+
+    if (this.y < 0) {
+      this.y = canvas.height;
+      this.wallTraveled = true;
+    } else if (this.y > canvas.height) {
+      this.y = 0;
+      this.wallTraveled = true;
+    }
   }
 }
 

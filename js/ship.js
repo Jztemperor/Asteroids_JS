@@ -5,9 +5,9 @@ class Ship {
     this.x = x;
     this.y = y;
     this.size = size;
-    this.rotationSpeed = 3;
+    this.rotationSpeed = 5;
     this.speed = 0;
-    this.maxSpeed = 10;
+    this.maxSpeed = 12;
     this.angle = 0;
     this.projectiles = [];
     this.lastShot = 0;
@@ -62,10 +62,10 @@ class Ship {
   accelearate(isAccelerating) {
     if (isAccelerating && this.speed < this.maxSpeed) {
       // Increase the ship's speed when accelerating
-      this.speed += 1;
+      this.speed += 2;
     } else {
       // Decelerate the ship
-      this.speed *= 0.99;
+      this.speed *= 0.975;
     }
   }
 
@@ -165,7 +165,11 @@ class Ship {
         projectile.y < 0 ||
         projectile.y > canvas.height
       ) {
-        this.projectiles.splice(i, 1);
+        if (!projectile.wallTraveled) {
+          projectile.backToCanvas();
+        } else {
+          this.projectiles.splice(i, 1);
+        }
       }
     }
   }
